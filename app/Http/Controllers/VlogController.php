@@ -7,6 +7,13 @@ use Illuminate\Http\Request;
 
 class VlogController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:api')->except('index');
+    }
+
+
     public function index(Request $request){
         $search = $request->input('search');
 
@@ -29,7 +36,11 @@ class VlogController extends Controller
             return response()->json(["message" => "All fields are required"], 400);
         }
 
-        $newvlog = Vlog::create($request->all());
+        $newvlog = Vlog::create([
+            'title' => $request->title,
+            'desc' => $request->desc,
+            'posted_by' => auth()->user()->id
+        ]);
 
         if($newvlog->save()){
             return response()->json(["message" => "Vlog created successfully"], 201);

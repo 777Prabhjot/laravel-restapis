@@ -12,5 +12,6 @@ class Vlog extends Model
     protected $fillable = [
         'title',
         'desc',
+        'posted_by'
     ];
 }

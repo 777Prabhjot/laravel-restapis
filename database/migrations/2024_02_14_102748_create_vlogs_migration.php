@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('vlogs', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('posted_by');
             $table->string('title');
             $table->string('desc');
+            $table->foreign('posted_by')->references('id')->on('users');  
             $table->timestamps();
         });
     }
